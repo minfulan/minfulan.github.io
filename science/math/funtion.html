@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>function</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<p>笛卡尔的坐标系中有两个相互垂直的坐标轴，二者上任取一点，组成有序的一对（前横后纵），可以代表坐标平面内所有可能的点。<br />
+直到 19
+世纪末，德国数学家格奥尔格·康托尔创立集合论时，需要一种数学语言来描述“所有可能配对的总体”。康托尔借鉴了笛卡尔坐标系的底层逻辑，把这种运算定义为“集合的乘积”，并为了纪念笛卡尔将代数与几何结合的贡献，将其正式命名为
+“笛卡尔积”（Cartesian Product）。</p>
+<p><span class="math display">\[A\times B=\{&lt;x,y&gt;|x \in A \wedge y
+\in B \}\]</span></p>
+<hr />
+<p>如果一个集合为空集或者它的元素都是有序对,则称这个集合是一个二元关系，记作<span
+class="math inline">\(R\)</span> 。<code>一个源于坐标的概念</code><br />
+<code>(x, y) := { {x}, {x, y} }</code></p>
+<p>设A、B 为集合，<span class="math inline">\(A \times B\)</span>
+的任何子集所定义的二元关系称作从A到B 的二元关系,特别 当A=B
+时,则称为<span class="math inline">\(A\)</span>上的二元关系。</p>
+<p>对于集合 <span class="math inline">\(A\)</span> 上的关系 <span
+class="math inline">\(R\)</span> 可以定义 5
+种性质：自反性、反自反性、对称性、反对称性和传递性。</p>
+<ul>
+<li><span class="math inline">\(R\)</span> 在 <span
+class="math inline">\(A\)</span> 上自反 <span
+class="math inline">\(\Leftrightarrow \forall x (x \in A \to
+xRx)\)</span>。</li>
+<li><span class="math inline">\(R\)</span> 在 <span
+class="math inline">\(A\)</span> 上反自反 <span
+class="math inline">\(\Leftrightarrow \forall x (x \in A \to \neg
+xRx)\)</span>。</li>
+<li><span class="math inline">\(R\)</span> 在 <span
+class="math inline">\(A\)</span> 上对称 <span
+class="math inline">\(\Leftrightarrow \forall x \forall y (x, y \in A
+\land xRy \to
+yRx)\)</span>。<code>有来必有往，关系的逆亦为自身</code></li>
+<li><span class="math inline">\(R\)</span> 在 <span
+class="math inline">\(A\)</span> 上反对称 <span
+class="math inline">\(\Leftrightarrow \forall x \forall y (x, y \in A
+\land xRy \land yRx \to x =
+y)\)</span>。<code>有来皆无往，关系的逆不为自身</code></li>
+<li><span class="math inline">\(R\)</span> 在 <span
+class="math inline">\(A\)</span> 上传递 <span
+class="math inline">\(\Leftrightarrow \forall x \forall y \forall z (x,
+y, z \in A \land xRy \land yRz \to
+xRz)\)</span>。<code>源于复合函数，有中间商的要直供。</code></li>
+</ul>
+<p>关系矩阵：对于<span class="math inline">\(R \subset A \times
+B\)</span>，定义一个布尔数矩阵，并对A和B中的元素排序，如果矩阵的(x,y)元素是1，那么代表<span
+class="math inline">\(&lt;A(x),B(y)&gt; \in
+R\)</span>，如果元素值是1，那么<span
+class="math inline">\(&lt;A(x),B(y)&gt; \notin R\)</span></p>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">充要条件</th>
+<th style="text-align: center;">自反</th>
+<th style="text-align: center;">反自反</th>
+<th style="text-align: center;">对称</th>
+<th style="text-align: center;">反对称</th>
+<th style="text-align: center;">传递</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>集合表示 <span
+class="math inline">\(R\)</span></strong></td>
+<td style="text-align: center;"><span class="math inline">\(I_A
+\subseteq R\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(I_A \cap R =
+\varnothing\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(R =
+R^{-1}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(R \cap
+R^{-1} \subseteq I_A\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(R \circ R
+\subseteq R\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>关系矩阵 <span
+class="math inline">\(M\)</span></strong></td>
+<td style="text-align: center;">主对角线元素全是 1</td>
+<td style="text-align: center;">主对角线元素全是 0</td>
+<td style="text-align: center;">对称矩阵</td>
+<td style="text-align: center;">若 <span
+class="math inline">\(r_{ij}=1\)</span>，且 <span
+class="math inline">\(i \neq j\)</span>，则 <span
+class="math inline">\(r_{ji}=0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(M -
+M^2\)</span> 中不含负数 <br> <em>(注：即若 <span
+class="math inline">\(M^2\)</span> 某位置为1，则 <span
+class="math inline">\(M\)</span> 对应位置必须为1)</em></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>关系图 <span
+class="math inline">\(G\)</span></strong></td>
+<td style="text-align: center;">每个结点都有环</td>
+<td style="text-align: center;">每个结点都没有环</td>
+<td
+style="text-align: center;">如果两个结点之间有边，必是一对方向相反的边</td>
+<td
+style="text-align: center;">如果两个结点之间有边，必是一条单方向的边</td>
+<td style="text-align: center;">若结点 <span
+class="math inline">\(x_i\)</span> 到 <span
+class="math inline">\(x_j\)</span> 有边，<span
+class="math inline">\(x_j\)</span> 到 <span
+class="math inline">\(x_k\)</span> 有边，则从 <span
+class="math inline">\(x_i\)</span> 到 <span
+class="math inline">\(x_k\)</span> 有边</td>
+</tr>
+</tbody>
+</table>
+<p>A上的二元关系常见有5种：</p>
+<ul>
+<li>恒等关系：<span class="math inline">\(I_A=\{&lt;x,x&gt;|x \in
+A\}\)</span><code>from line: y=x</code></li>
+<li>全域关系：<span class="math inline">\(E_A=A \times A\)</span></li>
+<li>小于或等于关系：<span class="math inline">\(L_A = \{&lt;x,y&gt;|x,y
+\in A \wedge x \le y \}\)</span><code>from triangle: y&gt;=x</code></li>
+<li>整除关系：<span class="math inline">\(D_A = \{&lt;x,y&gt;| x,y \in A
+\wedge
+x|y\}\)</span><code>x整除y（x是y的因子），自反（能被自己整除）、传递（a|b,b|c -&gt; a|c）、反对称（a|b,b|a -&gt; a=b）</code></li>
+<li>包含关系：</li>
+</ul>
+<p>我们从小就认识“等于号”（<span
+class="math inline">\(=\)</span>）。仔细想想，“等于”天然就具备这三个特征：</p>
+<ul>
+<li><strong>自反性</strong>：任何数都等于它自己（<span
+class="math inline">\(a = a\)</span>）。</li>
+<li><strong>对称性</strong>：如果 <span class="math inline">\(a =
+b\)</span>，那么 <span class="math inline">\(b = a\)</span>。</li>
+<li><strong>传递性</strong>：如果 <span class="math inline">\(a =
+b\)</span> 且 <span class="math inline">\(b = c\)</span>，那么 <span
+class="math inline">\(a = c\)</span>。
+“等价关系”正是把“等于”这个具体概念，从数字推广到了一切集合和对象上。当我们说两个对象“等价”时，实质上是说：<strong>在这个关系的视角下，它们完全可以被看作“同一个东西”</strong>，就像
+<span class="math inline">\(2\)</span> 和 <span
+class="math inline">\(\frac{4}2\)</span> 在数值上等价一样。</li>
+</ul>
+<p>对任何 <span class="math inline">\(x, y \in A\)</span>，如果 <span
+class="math inline">\(&lt;x, y&gt; \in\)</span> 等价关系 <span
+class="math inline">\(R\)</span>，则记作 <span class="math inline">\(x
+\sim y\)</span>。对于 <span class="math inline">\(A\)</span> 的任何元素
+<span class="math inline">\(x\)</span>，<span
+class="math inline">\(A\)</span> 中与 <span
+class="math inline">\(x\)</span> 等价的元素构成了 <span
+class="math inline">\(x\)</span> 的等价类，记作 <span
+class="math inline">\([x]_R\)</span>，简记作 <span
+class="math inline">\([x]\)</span>，即</p>
+<p><span class="math display">\[
+[x]_R = \{y \mid y \in A \land xRy\}
+\]</span></p>
+<p><span class="math inline">\(A\)</span> 上等价关系 <span
+class="math inline">\(R\)</span> 的所有等价类的集合称为 <span
+class="math inline">\(A\)</span> 在 <span
+class="math inline">\(R\)</span> 下的商集，记作 <span
+class="math inline">\(A/R\)</span>，即</p>
+<p><span class="math display">\[
+A/R = \{[x]_R \mid x \in A\}
+\]</span></p>
+<blockquote>
+<p>e.g. 在整数集 <span class="math inline">\(\mathbb{Z}\)</span>
+上定义“模 3 同余”（差值是 3 的倍数）关系 <span
+class="math inline">\(R\)</span>。<br />
+等价类有三个：<span
+class="math inline">\([0]=\{...,-3,0,3,6...\}\)</span>，<span
+class="math inline">\([1]=\{...,-2,1,4,7...\}\)</span>，<span
+class="math inline">\([2]=\{...,-1,2,5,8...\}\)</span>。<br />
+商集 <span class="math inline">\(\mathbb{Z}/R = \{[0], [1],
+[2]\}\)</span>。<br />
+<span class="math inline">\(0\)</span> 和 <span
+class="math inline">\(3\)</span> 属于同一个元素（都属于 <span
+class="math inline">\([0]\)</span>），<span
+class="math inline">\(1\)</span> 和 <span
+class="math inline">\(4\)</span> 属于同一个元素。</p>
+</blockquote>
+<p>自反、传递、但反对称的关系是<strong>偏序关系</strong>，如<span
+class="math inline">\(3&lt;5\)</span>而不能<span
+class="math inline">\(5&lt;3\)</span>。</p>
+<p>和关系有关的运算有以下 12 种：</p>
+<ul>
+<li><p><strong>定义域</strong><code>存在对应的y的x在定义域内</code>
+<span class="math display">\[ \text{dom}R = \{x \mid \exists y (&lt;x,
+y&gt; \in R)\} \]</span></p></li>
+<li><p><strong>值域</strong><code>存在对应的x的y在域内</code> <span
+class="math display">\[ \text{ran}R = \{y \mid \exists x (&lt;x, y&gt;
+\in R)\} \]</span></p></li>
+<li><p><strong>域</strong> <span class="math display">\[ \text{fld}R =
+\text{dom}R \cup \text{ran}R \]</span></p></li>
+<li><p><strong>逆</strong> <span class="math display">\[ R^{-1} =
+\{&lt;x, y&gt; \mid yRx\} \]</span></p></li>
+<li><p><strong>合成</strong> <span class="math display">\[ F \circ G =
+\{&lt;x, y&gt; \mid \exists z (xGz \land zFy)\} \]</span></p></li>
+<li><p><strong>限制</strong> <span class="math display">\[ F
+\upharpoonright A = \{&lt;x, y&gt; \mid xFy \land x \in A\}
+\]</span></p></li>
+<li><p><strong>像</strong> <span class="math display">\[ F[A] =
+\text{ran}(F \upharpoonright A) \]</span></p></li>
+</ul>
+<p>以下运算仅适合 <span class="math inline">\(A\)</span> 上的关系 <span
+class="math inline">\(R\)</span>：</p>
+<ul>
+<li><p><strong>幂</strong> <span class="math display">\[ R^0 = I_A
+\]</span> <span class="math display">\[ R^{n+1} = R^n \circ R \quad (n
+\text{ 为自然数}) \]</span></p></li>
+<li><p><strong>自反闭包</strong> <span class="math display">\[ r(R) = R
+\cup R^0 \]</span></p></li>
+<li><p><strong>对称闭包</strong> <span class="math display">\[ s(R) = R
+\cup R^{-1} \]</span></p></li>
+<li><p><strong>传递闭包</strong> <span class="math display">\[ t(R) = R
+\cup R^2 \cup \cdots \]</span></p></li>
+</ul>
+<p>类比理解：修一条“路” 假设你在一个城市里修了几条单行线（这就是关系 ( R
+)）。你觉得不够完美，想让它变成一个“四通八达”的交通网（满足某种性质
+P，比如传递性）。</p>
+<ul>
+<li><strong>闭包就是</strong>：你只<strong>添加</strong>最少量的新路，不多修一条，使得修完后的路网恰好满足“四通八达”这个要求。</li>
+<li>你绝不动原有的路（必须包含 ( R
+)），也绝不乱加多余的路（必须是<strong>最小</strong>的）。</li>
+</ul>
+<style>
+  body { 
+    min-width: 80% !important; 
+    /* 或者直接 max-width: 100% !important; 以完全自适应 */
+  }
+</style>
+</body>
+</html>

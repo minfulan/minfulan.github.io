@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Graph</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<p>无向图 <span class="math inline">\(G=&lt;V, E&gt;\)</span>，其中
+<span class="math inline">\(V \neq \varnothing\)</span>
+称为顶点集，其元素称为顶点，<span class="math inline">\(E\)</span> 是
+<span class="math inline">\(V \&amp; V\)</span>
+的多重子集，称为边集，其元素称为无向边或边。有向图 <span
+class="math inline">\(D=&lt;V, E&gt;\)</span>，其中 <span
+class="math inline">\(V\)</span> 同无向图，<span
+class="math inline">\(E\)</span> 是 <span class="math inline">\(V \times
+V\)</span> 的多重子集，其元素称为有向边或边。有时用 <span
+class="math inline">\(G\)</span> 泛指图（无向的或有向的），但 <span
+class="math inline">\(D\)</span> 只表示有向图。用 <span
+class="math inline">\(V(G)(V(D))\)</span>、<span
+class="math inline">\(E(G)(E(D))\)</span> 分别表示 <span
+class="math inline">\(G(D)\)</span> 的顶点集与边集。</p>
+<p>“阶数”就是图里“点的个数”。</p>
+<p>只有顶点没有边的图称为零图,只有一个顶点的零图称为平凡图。</p>
+<p>环（Loop）：特指一条边，这条边的起点和终点是同一个顶点（自环）。</p>
+<p>圈（Cycle）：特指一条路径，这条路径从某个顶点出发，经过至少三个不同的顶点后，又回到起点（闭合回路）。</p>
+<p>对于无向图,若关联一对顶点的边多于一条,则称这些边为平行边。对于有向图,若关联一对顶点的方向相同的边多于一条,则称这些边为平行边。平行边的条数称作重数。既不含平行边,也不含环的图称为简单图。</p>
+<p>图中任意两顶点至少有一条路径，那么这种图是<strong>连通图</strong>。两个顶点间必然有一条边，那么这种图是<strong>完全图</strong>。</p>
+<p>有向图的连通性若略去有向图D中各边的方向所得无向图是连通图,则称D是弱通图(或连通图);若D中任何两个顶点至少一个可达另一个,则称D是单向连通图;若
+D中任何两个顶点都是相互可达的,则称D是强连通图。强连通图一定是单向连通图,单向连通图一定是弱连通图。（弱连通而不单向连通的结构：V型<span
+class="math inline">\(a\to b \wedge a\to c\Rightarrow \,b\,\, not\to
+c\)</span>）</p>
+<p>连通且不含圈的简单图是<strong>树</strong>。平凡图又能叫平凡树。</p>
+<p><strong>正则图</strong>指的是每个顶点的度数都相同的无向简单图。</p>
+<p>生成图：含所有顶点的子图；导出图：子集所含的点在原图中所关联的全部边都包含进去。</p>
+<p><strong>补图</strong>是指与原图具有相同顶点集，其边集由原图中
+相对于原图所有顶点形成的完全图 不存在的边组成。</p>
+<p><strong>图的同构</strong>是指两个图在顶点和边的结构上完全相同，只是顶点标号可能不同。</p>
+<p><strong>通路</strong>（Path）是图中一系列连续相连的顶点序列，其中任意两个相邻顶点之间都有边相连。<br />
+回路（Cycle）是特殊的通路，其起点和终点相同。</p>
+<p>一笔绘制一个路径，有起点，经过点，和终点。起终点会发出或接收一条路径，经过点则既发出一条路径又接收一条路径。所以一个笔画的起终点是有一个路径的，而经过点是有二个。<br />
+多个笔画叠加在一起，起点和终点如果在一起，就变成了经过点，1+1=2，它的通路是二，如果又作为其它笔画的经过点，就是二的倍数个通路，也就是偶数个通路。<br />
+如果不考虑笔画的方向，终点和终点，起点和起点，叠在一起的情况，和上文是一样的。<br />
+经过点和经过点叠加在一起，点的通路是偶数个。<br />
+起终点和经过点叠在一起，点的通路是奇数个。<br />
+过一点的通路有奇数个，这个点就是奇点。这意味着这个点是某个笔画的端点(起终点)</p>
+<p>连通图如果能还原为笔画的叠加，那么由于笔画必有2个或0个端点，那么图的奇点必然是偶数个。</p>
+<p>笔画的术语是<strong>迹</strong>。顶点的通路个数是<strong>度</strong>。</p>
+<blockquote>
+<p>· 在标准图论定义中，一个单独的顶点被视为连通图（称为“平凡连通”）。 ·
+因为连通的定义是“任意两个顶点之间都有路径”，只有一个顶点时，条件“任意两个”为空真，所以成立。</p>
+</blockquote>
+<p>一个图如果没有孤点，那么它一定能还原为迹。</p>
+<p>如果有一条路径能经过图中所有通路有且仅有一次，那么这样的路径(最早由欧拉找到)就叫欧拉路径。如果欧拉路径是闭合的，就叫欧拉回路。
+欧拉路径就是一个迹(笔画)能画出的路径。</p>
+<p>如果有一条路径能经过图中所有顶点有且仅有一次，那么这样的路径(最早由哈密顿提出)就叫哈密顿路径。如果哈密顿路径是闭合的，就叫哈密顿回路。</p>
+<p>在一条能走遍所有顶点的路线（哈密顿通路）上，每“跳过”一个顶点，最多只能让剩下的图断出一截。</p>
+<h3 id="连通分量">连通分量</h3>
+<p>在无向图中，连通分量是图的一个极大连通子图。<br />
+· 连通：子图内任意两个顶点之间都存在路径。<br />
+· 极大：如果再加入原图中的任何一个额外顶点，子图就不再连通了。</p>
+<p>割集就是“拆掉这组边（或点）之后，能把图一分为二的临界组合”。</p>
+<p>点割集是图中删除后会增加连通分量的最小顶点集合。（如果从图中删除某个顶点集后，图变为不连通，且删除该集合的任意真子集仍保持连通，则该顶点集称为点割集）元素为<strong>割点</strong>。<br />
+边割集是图论中删除后会增加图连通分量的边的集合，且该集合是最小的使图不连通的边集。元素为<strong>桥</strong>。</p>
+<h3 id="矩阵">矩阵</h3>
+<h4 id="关联矩阵">关联矩阵</h4>
+<p>如：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>e1</th>
+<th>e2</th>
+<th>e3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>v2</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>v3</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>边的起点记作1，终点为-1，无向图中的端点都记作1。</p>
+</blockquote>
+<h4 id="可达矩阵">可达矩阵</h4>
+<p>如三角形：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>v1</th>
+<th>v2</th>
+<th>v3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>v2</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>v3</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>i到j的边记为1，对称的矩阵代表的是无向图。</p>
+</blockquote>
+<h4 id="邻接矩阵">邻接矩阵</h4>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>v1</th>
+<th>v2</th>
+<th>v3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>v2</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>v3</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><span class="math inline">\(v_i\)</span> 到 <span
+class="math inline">\(v_j\)</span> 的边数n为矩阵的元素 <span
+class="math inline">\(a_{ij}=n\)</span>，对称的矩阵代表的是无向图。</p>
+</blockquote>
+<p>把图的邻接矩阵 <span class="math inline">\(A\)</span> 自乘上 <span
+class="math inline">\(l\)</span> 次，得到的新矩阵 <span
+class="math inline">\(A^l\)</span>
+里，每个数字都精确地告诉你，从某个点出发，走 <span
+class="math inline">\(l\)</span>
+步能到达某个点的<strong>走法</strong>有多少种。</p>
+<p><span class="math inline">\(B_r\)</span> 是这样定义的： <span
+class="math display">\[
+B_r = A + A^2 + A^3 + \cdots + A^r
+\]</span></p>
+<p>也就是说，<span class="math inline">\(B_r\)</span> 是前 <span
+class="math inline">\(r\)</span> 个幂矩阵的“和”。</p>
+<ul>
+<li>既然 <span class="math inline">\(A^l\)</span> 里每个元素代表“恰好走
+<span class="math inline">\(l\)</span> 步”的路径数。</li>
+<li>那么把它们加起来，自然就代表“<strong>走不超过 <span
+class="math inline">\(r\)</span> 步</strong>”的路径总数。</li>
+</ul>
+<h3 id="迷宫">迷宫</h3>
+<p>一个迷宫中的出入口，岔路口，拐角，死胡同的尽头视作顶点，顶点间的路就视作通路，那么迷宫就会变成一个连通图。</p>
+<p>其中，死胡同的尽头，度数为1，拐角度数为2，岔路口的度数在2以上，令出入口的度数自动加1，因为通往迷宫外。</p>
+<p>要找到一条迹连通出入口，一个做法是遍历所有的度数为1的点(死胡同的尽头)，抹去这些点和相关的通路，然后重复进行直到没有这样的点。
+迭代的每次结果可以视作生成一个新的迷宫。</p>
+<p>k核分解是将图中度数小于k的顶点及相关通路都迭代删去，直到没有。上文中寻找迷宫解法的方法就是2核分解。</p>
+<p>通道标记的算法：<br />
+　　在通道上标记走过的次数，那么有三种情况：0（没有走过）1（走过一次）2（走到尽头后又回来）
+　　优先走标记值低的通道，然后是不走标记为2的死路。 　　 ### 树 ·
+子树：可以是原图的一小部分顶点。<br />
+· 生成树：必须包含全部顶点。</p>
+<p>若无向图G的生成子图T是一棵树,则称T为G的生成树。G在T中的边称为T的树枝,G不在T中的边称为T的弦。T的全体弦组成的集合的导出子图称为T的余树。注意,T的余树不一定是树,它可能不连通,也可能含回路。</p>
+<p>基本回路与基本回路系统 设 T 是无向图 G 的生成树,对每条弦e,G
+中有唯一一条 由e 和 T 的树枝构成的初级回路，称为对应弦e 的基本回路。G
+中所有基本回路的集合称 为对应 T
+的基本回路系统。<code>每个弦对应一个回路。</code></p>
+<p>基本割集与基本割集系统 对 T 的每条树枝a,G 中有唯一一个由 a 和 T
+的弦构成的割集,称为对应树枝 a 的基本割集。G 中所有基本割集的集合称为对应
+T
+的基本割集系统。<code>每个枝和唯一一组弦组成对应唯一的边割集</code></p>
+<p>设无向图 <span class="math inline">\(G=&lt;V, E&gt;\)</span>，<span
+class="math inline">\(|V|=n\)</span>，<span
+class="math inline">\(|E|=m\)</span>，则下面命题等价。</p>
+<ol type="1">
+<li><p><span class="math inline">\(G\)</span> 连通且不含回路，即 <span
+class="math inline">\(G\)</span> 是一棵树。</p></li>
+<li><p><span class="math inline">\(G\)</span>
+的每对顶点之间有唯一的一条路径。</p></li>
+<li><p><span class="math inline">\(G\)</span> 连通且 <span
+class="math inline">\(m=n-1\)</span>。</p></li>
+<li><p><span class="math inline">\(G\)</span> 中无回路且 <span
+class="math inline">\(m=n-1\)</span>。</p></li>
+<li><p><span class="math inline">\(G\)</span> 中无回路，但在 <span
+class="math inline">\(G\)</span>
+中任何两个不相邻顶点之间加一条新边，所得图中含唯一的一条初级回路。</p></li>
+<li><p><span class="math inline">\(G\)</span>
+连通且每条边都是桥。</p></li>
+</ol>
+<p>任何一棵“正经的树”（无向树），只要它不止一个点，就至少有两个“末梢”（叶子）。</p>
+<h3 id="欧拉公式">欧拉公式</h3>
+<p>设连通平面图有 V 个顶点，E 条边，F 个面（包括外部无限面）。<br />
+第一步：削去边，直到变成树（保持连通）<br />
+找到图中任意一个回路（环），删掉该回路上的一条边。<br />
+发生了什么变化？<br />
+· 顶点数 V：不变。<br />
+· 边数 E：减少 1。<br />
+· 面数 F：因为把两个相邻的面打通了，面数也减少 1。<br />
+结论：V - E + F 的值在删边前后保持不变（因为 E 和 F 同时减了
+1，差值抵消了）。<br />
+第二步：直到没有回路（得到一棵生成树）<br />
+重复上述操作，直到图中不再有任何回路，此时图变成了一棵生成树。<br />
+· 对于一棵树，边数 E’ = V - 1。<br />
+· 对于一棵树，没有闭合区域，只有 1 个面（即外部无限面），所以 F’ =
+1。<br />
+第三步：代入验证<br />
+此时：<br />
+V - E’ + F’ = V - (V - 1) + 1 = 1 + 1 = 2<br />
+因为在削边过程中，V - E + F 的值始终没有改变，所以原连通平面图也必然满足
+V - E + F = 2。证毕！</p>
+<h3 id="最小生成树最小成本树">最小生成树（最小成本树）</h3>
+<p>克鲁斯卡尔算法（Kruskal）——按边排序，避圈
+这是考试中最爱考的方法（因为步骤清晰）： ·
+把所有的边按权值从小到大排序； ·
+从最小的边开始选，只要加入后不形成回路（不构成环），就保留；（构成环会浪费一条边，其中的最大者必须放弃。后来者定比先来者大。）
+· 直到选出 n-1 条边为止。</p>
+<p>普里姆算法（Prim）——按点扩展，连最近 · 随便选一个顶点出发； ·
+每次从已选顶点集合出发，找到连接未选顶点的最短边，把那个新顶点拉进来； ·
+重复直到所有顶点都被包含</p>
+<h4 id="有向树及根树">有向树及根树</h4>
+<p>若略去有向图所有边的方向所得无向图为无向树，则称 D 为有向树。
+一棵非平凡的有向树
+T，如果有一个顶点的入度为0，<strong>其余顶点的入度均为1</strong>，则称 T
+为（有）根树。在根树中,入度为0的顶点称为树根。入度为1、出度为
+0的顶点称为树叶。入度为 1、
+出度不为0的顶点称为内点。树根与内点统称为分支点。在根树中,从树根到一个顶点的
+通路长度称为该顶点的层数。顶点的最大层数称为树高。</p>
+<p>一棵根树可以看作一个家族。非元祖的内点及其所有后代的导出子图可以成为根子树。</p>
+<p>若对根树 T 中每层上的顶点指定顺序（排兄弟次序）,则称 T 为有序树。</p>
+<p><strong>根树的分类</strong> 设 <span class="math inline">\(T\)</span>
+为一棵根树。</p>
+<ol type="1">
+<li><p>若 <span class="math inline">\(T\)</span> 的每个分支点至多有
+<span class="math inline">\(r\)</span> 个儿子，则称 <span
+class="math inline">\(T\)</span> 为 <span
+class="math inline">\(r\)</span> 叉树。若 <span
+class="math inline">\(T\)</span> 的每个分支点都恰好有 <span
+class="math inline">\(r\)</span> 个儿子，则称 <span
+class="math inline">\(T\)</span> 为 <span
+class="math inline">\(r\)</span> 叉正则树。此时又若 <span
+class="math inline">\(T\)</span> 的所有树叶层数相同，则称 <span
+class="math inline">\(T\)</span> 为 <span
+class="math inline">\(r\)</span> 叉完全正则树。</p></li>
+<li><p>有序的 <span class="math inline">\(r\)</span> 叉树，称为 <span
+class="math inline">\(r\)</span> 叉有序树。有序的 <span
+class="math inline">\(r\)</span> 叉正则树称为 <span
+class="math inline">\(r\)</span> 叉有序正则树。有序的 <span
+class="math inline">\(r\)</span> 叉完全正则树称为 <span
+class="math inline">\(r\)</span> 叉有序完全正则树。</p></li>
+</ol>
+<p>Huffman
+算法的核心思想是：每次把“最轻”的两块积木拼在一起，形成一块新的“重”积木，重复直到只剩一块。</p>
+<blockquote>
+<p>具体步骤（手算模拟）：<br />
+列出所有叶子：假设有 5 个权值：5, 6, 2, 9, 7。<br />
+排序：2, 5, 6, 7, 9。<br />
+取最小两个合并：取 2 和 5，合并成 7（新节点权值为
+2+5=7）。现在集合变为：6, 7（新）, 7（原）, 9。<br />
+再取最小两个合并：取 6 和 7（新），合并成 13。现在集合变为：7（原）, 9,
+13。<br />
+再取最小两个合并：取 7 和 9，合并成 16。现在集合变为：13, 16。<br />
+最后合并：取 13 和 16，合并成 29（根节点）。</p>
+</blockquote>
+<p>这棵树的形状：越早被合并的叶子（权值小的）在树的最底层；越晚合并的叶子（权值大的）在树的上层。这就实现了“高频在上，低频在下”。<code>像一把锯子/梳子</code></p>
+<p>一棵二叉树天然就等价于一套<strong>前缀码</strong>：</p>
+<ul>
+<li>把树的每一条左分支记为 0，每一条右分支记为 1。</li>
+<li>从根节点走到某个叶子节点，沿途经过的 0/1
+序列，就是这个叶子对应的编码。</li>
+</ul>
+<p><strong>最佳前缀码 = 最优二叉树。</strong></p>
+<h3 id="最短点遍历">最短点遍历</h3>
+<p>Dijkstra（迪杰斯特拉）标号法，就是用来在“带权地图”上，快速找出从起点到所有其他点的最短路径（总权值最小）的一套标号打勾的步骤。它特别要求：所有路的长度（权值）都不能是负数。</p>
+<ul>
+<li>初始化：起点的距离标为
+0（自己到自己），其他所有不通向的顶点标为无穷大（∞），通向的点标上权值。</li>
+<li>试探更新：从当前已经打勾的点出发，看它通向哪些邻居。如果走这条路能让邻居的距离变短，就更新（松弛）
+邻居的临时标号。</li>
+<li>打勾确认：在所有还没有打勾的点里，找出临时标号最小的那个点。这个数字已经不可能再被其他路径缩短了（贪心思想），所以给它永久标号（打勾）。</li>
+<li>重复：以这个新打勾的点为跳板，继续向它的邻居试探……直到所有点都打完勾，或者到达了你想去的终点。</li>
+</ul>
+<p><strong>四色定理</strong>——任何平面地图（即平面图）的着色，最少只需要
+4 种颜色。</p>
+<hr />
+<p><strong>二部图</strong>是一种图论模型，其顶点集可以划分为两个互不相交的子集，且每条边都连接两个不同子集的顶点。</p>
+<p>二部图可以分成两个阵营（0和1）走出一个回路一定要进行偶数次阵营转变才回到原来阵营中的起点；反之如果有奇数长度的回路，从一点出发按步数的奇偶划分阵营，就会有同营相连，不是二部图。</p>
+<p>图论中的匹配是指在一个图中，任意两条边都没有公共顶点的边的集合。匹配边的点是“饱和点”。匹配的类型包括最大匹配和完美匹配等。<br />
+最大匹配是指在一个图中，无法再通过添加其他边来增大匹配的情况。（具有最大边数的匹配）<br />
+完美匹配是指一个匹配中每个顶点都是匹配点，即所有顶点都恰好与一条匹配边相连。完美匹配一定是最大匹配，但并非所有图都存在完美匹配。</p>
+<p><strong>Hall定理</strong>：二部图中人少的一方任意分出一组，这组成员所匹配的对象总数不少于成员数，那么可以总体的完美匹配。（这样的条件称作相异性条件）</p>
+<p><strong>t条件</strong>
+是相异性条件的极端版：一个阵营中所有顶点度数不小于t，而另一个阵营所有顶点度数不超过t，和Hall定理一样的结果。</p>
+<p>寻找最大匹配——匈牙利算法：</p>
+<ul>
+<li>非匹配边相当于“新的配对提议”。</li>
+<li>匹配边相当于“旧的配对关系”。<br />
+当我们沿着增广路径取反时，就像是一连串的“分手”和“牵手”：c抢了a的1，a就去抢b的2，b只好去抢空的3。最终，只有起点和终点（两个单身的人）改变了状态，路径中间的人只是换了个对象，但依然处于配对状态。这就导致了总配对数净增
+1。</li>
+</ul>
+<hr />
+<p>平面图，直观理解就是：一张图，你可以把它画在纸上，让所有的边都不交叉（不相交）。</p>
+<style>
+  body { 
+    min-width: 80% !important; 
+    /* 或者直接 max-width: 100% !important; 以完全自适应 */
+  }
+</style>
+</body>
+</html>
