@@ -312,7 +312,7 @@ b\)</span> 且 <span class="math inline">\(b = c\)</span>，那么 <span
 class="math inline">\(a = c\)</span>。
 “等价关系”正是把“等于”这个具体概念，从数字推广到了一切集合和对象上。当我们说两个对象“等价”时，实质上是说：<strong>在这个关系的视角下，它们完全可以被看作“同一个东西”</strong>，就像
 <span class="math inline">\(2\)</span> 和 <span
-class="math inline">\(\frac{4}2\)</span> 在数值上等价一样。</li>
+class="math inline">\(\frac{4}{2}\)</span> 在数值上等价一样。</li>
 </ul>
 <p>对任何 <span class="math inline">\(x, y \in A\)</span>，如果 <span
 class="math inline">\(&lt;x, y&gt; \in\)</span> 等价关系 <span
@@ -354,6 +354,18 @@ class="math inline">\(4\)</span> 属于同一个元素。</p>
 <p>自反、传递、但反对称的关系是<strong>偏序关系</strong>，如<span
 class="math inline">\(3&lt;5\)</span>而不能<span
 class="math inline">\(5&lt;3\)</span>。</p>
+<p>表示偏序关系的<strong>哈斯图</strong>：<code>哈斯图的规则是：小元素在下，大元素在上，且连线表示“小于等于”关系，方向默认从下往上。</code></p>
+<ul>
+<li>最小的元<span
+class="math inline">\(m_0\)</span>在第一层，不能由<span
+class="math inline">\(m_0\)</span>整除且小于 最小的由<span
+class="math inline">\(m_0\)</span>整除的数 的数同样在第一层；</li>
+<li>最小的由<span class="math inline">\(m_0\)</span>整除的数<span
+class="math inline">\(m_1\)</span>在第二层，不能由<span
+class="math inline">\(m_1\)</span>整除且小于 最小的由<span
+class="math inline">\(m_1\)</span>整除的数 的数同样在第二层；</li>
+<li>以此类推。</li>
+</ul>
 <p>和关系有关的运算有以下 12 种：</p>
 <ul>
 <li><p><strong>定义域</strong><code>存在对应的y的x在定义域内</code>
@@ -368,18 +380,19 @@ class="math display">\[ \text{ran}R = \{y \mid \exists x (&lt;x, y&gt;
 \{&lt;x, y&gt; \mid yRx\} \]</span></p></li>
 <li><p><strong>合成</strong> <span class="math display">\[ F \circ G =
 \{&lt;x, y&gt; \mid \exists z (xGz \land zFy)\} \]</span></p></li>
-<li><p><strong>限制</strong> <span class="math display">\[ F
-\upharpoonright A = \{&lt;x, y&gt; \mid xFy \land x \in A\}
-\]</span></p></li>
+<li><p><strong>限制</strong><code>以A中元素为起点的序对集</code> <span
+class="math display">\[ F \upharpoonright A = \{&lt;x, y&gt; \mid xFy
+\land x \in A\} \]</span></p></li>
 <li><p><strong>像</strong> <span class="math display">\[ F[A] =
 \text{ran}(F \upharpoonright A) \]</span></p></li>
 </ul>
 <p>以下运算仅适合 <span class="math inline">\(A\)</span> 上的关系 <span
 class="math inline">\(R\)</span>：</p>
 <ul>
-<li><p><strong>幂</strong> <span class="math display">\[ R^0 = I_A
-\]</span> <span class="math display">\[ R^{n+1} = R^n \circ R \quad (n
-\text{ 为自然数}) \]</span></p></li>
+<li><p><strong>幂</strong><code>n次幂只看n次可达的结果</code> <span
+class="math display">\[ R^0 = I_A \]</span> <span
+class="math display">\[ R^{n+1} = R^n \circ R \quad (n \text{ 为自然数})
+\]</span></p></li>
 <li><p><strong>自反闭包</strong> <span class="math display">\[ r(R) = R
 \cup R^0 \]</span></p></li>
 <li><p><strong>对称闭包</strong> <span class="math display">\[ s(R) = R
